@@ -43,11 +43,6 @@ webpage where we can use them in the html page using [jinja2](https://jinja.pall
         <!-- <p>{{todo['_id']}}</p> this to show that every item in the db gets an id -->
         <div class="todo">
             <p>{{ todo['content'] }} <i>({{ todo['degree']}})</i></p>
-
-            <form method="POST" action="{{ url_for('delete', id=todo['_id']) }}">
-                <input type="submit" value="Delete Todo"
-                    onclick="return confirm('Are you sure you want to delete this Todo?')">
-            </form>
         </div>
         {% endfor %}
 ```
@@ -59,5 +54,29 @@ def delete(id): # id must be the same name as in the decorator
     todos.delete_one({"_id": ObjectId(id)})
     return redirect(url_for('index'))
 ```
+I will paste the html code in index.html to try to explain:
+```html
+{% for todo in todos %}
+        <!-- <p>{{todo['_id']}}</p> this to show that every item in the db gets an id -->
+        <div class="todo">
+            <p>{{ todo['content'] }} <i>({{ todo['degree']}})</i></p>
+
+            <form method="POST" action="{{ url_for('delete', id=todo['_id']) }}">
+                <input type="submit" value="Delete Todo"
+                    onclick="return confirm('Are you sure you want to delete this Todo?')">
+            </form>
+        </div>
+        {% endfor %}
+```
+what we are currently intersted in is:
+```html
+<form method="POST" action="{{ url_for('delete', id=todo['_id']) }}">
+                <input type="submit" value="Delete Todo"
+                    onclick="return confirm('Are you sure you want to delete this Todo?')">
+            </form>
+```
+First, we need to know that when insert an object to the db it gets a unique id. If you uncomment the `<p>{{todo['_id']}}</p>` you will get the ids showing on the page.
+We have the input tag with type 'submit' and the value showing on screen is 'Delete Todo'. The form's action tells us that when we press the button and submit the form we send a 'POST' request to the server, into the view function called `delete(id)` which gets  an id as a parameter with the same name as in the decorator. `<id>` is a variable placeholder. It captures a string at that position in the url and passes that to the view function. It is passed as a keyword with the same name as the placeholder, so the view function needs to accept an argument with the same name (or **kwargs).
+After that, we can delete the specific todo with the sent id and redirect to home page.
 
 
