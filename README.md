@@ -1,6 +1,6 @@
 # Todo_app_flask
 
-A simple Todo list app using flask on the backend.
+A simple Todo list app using flask and mongodb on the backend.
 
 Explainations to some of the important things:
 
