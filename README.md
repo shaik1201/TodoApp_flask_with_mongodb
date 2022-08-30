@@ -10,7 +10,7 @@ client = MongoClient('localhost', 27017)
 db = client.flask_db
 todos = db.todos
 ```
-`client` is an object and we pass it localhost for the local server started on our pc, and we pass a port number. (27017 uses for mongodb).
+`client` is an object and we pass it localhost for the local server started on our pc, and we pass a port number. (27017 is used for mongodb).
 in `db = client.flask_db` we created a database to hold our data.
 `todos = db.todos` create a collection called todos in our db.<br>
 **_NOTE:_**  The database will only be created when we insert some info in it, so check in mongo shell for 'show dbs' won't show this db yet.
